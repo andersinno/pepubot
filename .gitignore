@@ -1,0 +1,17 @@
+.env
+.#*
+
+*.py[cdo]
+
+.eggs
+/build
+/dist
+*.egg-info
+
+.mypy_cache
+.cache
+.coverage
+.tox
+
+requirements-local.*
+pepubot.conf

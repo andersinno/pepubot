@@ -1,0 +1,12 @@
+/Dockerfile
+/docker-compose.yml
+*.pyc
+**/__pycache__
+.git
+.tox
+.mypy_cache
+.cache
+/build
+/dist
+*.egg-info
+pepubot.conf

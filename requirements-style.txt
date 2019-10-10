@@ -1,0 +1,10 @@
+entrypoints==0.3
+flake8==3.7.8
+flake8-isort==2.7.0
+flake8-polyfill==1.0.2
+isort==4.3.21
+mccabe==0.6.1
+pep8-naming==0.8.2
+pycodestyle==2.5.0
+pyflakes==2.1.1
+testfixtures==6.10.0

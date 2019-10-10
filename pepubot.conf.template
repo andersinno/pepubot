@@ -1,0 +1,11 @@
+# OAuth API token to access Slack
+#
+# Set this to the Bot User Access Token ("xoxb-...")
+SLACK_API_TOKEN="xoxb-8888888888-888888888888-x8x8x8x8x8x8x8x8x8x8x8x8"
+
+# Timezone to use for generated timestamps (e.g. Ticket.created_at)
+TIMEZONE="Europe/Helsinki"
+
+# Location of the storage file.  By default it is placed to the home
+# directory.
+#STORAGE_FILE=/path/to/pepubot-data.json

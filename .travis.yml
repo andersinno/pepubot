@@ -1,0 +1,32 @@
+branches: {only: [master, test]}
+
+sudo: false
+language: python
+cache: pip
+
+python: "3.7"
+
+matrix:
+  include:
+    - name: Packaging
+      env: TOXENV=packaging
+
+    - name: Requirements
+      env: TOXENV=requirements
+
+    - name: Style
+      env: TOXENV=style
+
+    - name: Typing
+      env: TOXENV=typing
+
+    - name: Python 3.7
+      python: "3.7"
+
+install: pip install tox==3.14.0 tox-travis==0.12
+
+script: tox -v
+
+after_success:
+  - pip install codecov
+  - codecov -e TRAVIS_PYTHON_VERSION
