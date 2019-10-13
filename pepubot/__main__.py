@@ -2,13 +2,11 @@ import argparse
 import asyncio
 import logging
 import sys
-from typing import Any, Mapping, Sequence
+from typing import Any, Sequence
 
-import slack
-
+from . import slack
 from .runner import PePuRunner
 from .settings import initialize_settings
-from .slack import get_rtm_client
 
 LOG = logging.getLogger(__name__)
 
@@ -30,23 +28,18 @@ def parse_args(argv: Sequence[str]) -> Any:
 
 def run_pepubot() -> None:
     LOG.info('Initializing the Slack RTM client')
-    slack_rtm_client = get_rtm_client()
+    slack_rtm_client = slack.get_rtm_client()
+
+    LOG.info('Creating PePuRunner with a Slack Web client')
+    slack_web_client = slack.get_web_client()
+    pepu_runner = PePuRunner(slack_web_client)
 
     LOG.info('Binging our event handler')
-    slack_rtm_client.on(event='message', callback=handle_new_message)
+    slack_rtm_client.on(event='message', callback=pepu_runner.feed_message)
 
     LOG.info('Starting the Slack RTM session in an event loop')
     loop = asyncio.get_event_loop()
     loop.run_until_complete(slack_rtm_client.start())
-
-
-async def handle_new_message(
-        *,
-        data: Mapping[str, Any],
-        web_client: slack.WebClient,
-        **kwargs: object,
-) -> None:
-    await PePuRunner(web_client).feed_message(data)
 
 
 if __name__ == '__main__':

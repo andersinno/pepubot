@@ -28,8 +28,12 @@ class PePuRunner:
         self.round_participants: List[str] = []
         self._lock = asyncio.Lock()
 
-    async def feed_message(self, event_data: Mapping[str, Any]) -> None:
-        message = Message.from_message_event(event_data)
+    async def feed_message(
+            self,
+            data: Mapping[str, Any],
+            **kwargs: object,
+    ) -> None:
+        message = Message.from_message_event(data)
         if not message:
             return
 
