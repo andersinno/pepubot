@@ -23,6 +23,7 @@ class PePuState(Enum):
 class PePuRunner:
     def __init__(self, slack_client: slack.WebClient) -> None:
         self.slack = slack_client
+        self._state_loaded: bool = False
         self.state: PePuState = PePuState.not_started
         self.start_message: Optional[MessageInfo] = None
         self.round_participants: List[str] = []
@@ -270,6 +271,9 @@ class PePuRunner:
                 channel=message.channel, text=text)
 
     async def _load(self) -> None:
+        if self._state_loaded:
+            return
+
         storage = get_default_storage()
 
         async with self._lock:
@@ -284,6 +288,8 @@ class PePuRunner:
             MessageInfo(*start_message.split(' ')))
 
         self.round_participants = (participants or '').splitlines()
+
+        self._state_loaded = True
 
     async def _save(self) -> None:
         storage = get_default_storage()
